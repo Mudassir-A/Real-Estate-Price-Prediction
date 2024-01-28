@@ -2,6 +2,10 @@
 import dash
 from dash import html, dcc, Input, Output, State
 import pandas as pd
+import pickle
+
+# Load Model
+model = pickle.load(open("./models/model.pkl", "rb"))
 
 # Initialize the Dash app
 app = dash.Dash(__name__)
@@ -53,7 +57,7 @@ app.layout = html.Div(
                     style={"text-align": "center"},
                 ),
                 html.Div(
-                    id="predict_output",
+                    id="prediction_output",
                     style={
                         "text-align": "center",
                         "font-size": "20px",
@@ -95,10 +99,10 @@ def update_output(
         features = pd.DataFrame(
             [[distance_to_mrt, num_convenience_stores, latitude, longitude]],
             columns=[
-                "distance_to_mrt",
-                "num_convenience_stores",
-                "latitude",
-                "longitude",
+                "Distance to the nearest MRT station",
+                "Number of convenience stores",
+                "Latitude",
+                "Longitude",
             ],
         )
         # Predict
